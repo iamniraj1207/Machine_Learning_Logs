@@ -28,8 +28,35 @@ plt.show()
 
 
 w = 200                         
-b = 100    
+b = 100    #manually changing the weights and biases of the function for regression of fitting the line to the training set to see how the prediction is performed.
 x_i = 1.2
 cost_1200sqft = w * x_i + b    
 
 print(f"${cost_1200sqft:.0f} thousand dollars")
+# can also be done by taking a function for a for loop of inputs 
+
+def compute_model_output(x,w,b):
+  m = x.shape[0]
+  f_wb = np.zeros(m)
+  for i in range(m):
+    f_wb[i] = w *x[i] + b
+    return f_wb
+
+
+temp_model_prediction = compute_model_output(x_train,w,b)
+tmp_f_wb = compute_model_output(x_train, w, b,)
+
+# Plot our model prediction
+plt.plot(x_train, temp_model_prediction, c='b',label='Our Prediction')
+
+# Plot the data points
+plt.scatter(x_train, y_train, marker='x', c='r',label='Actual Values')
+
+# Set the title
+plt.title("Housing Prices")
+# Set the y-axis label
+plt.ylabel('Price (in 1000s of dollars)')
+# Set the x-axis label
+plt.xlabel('Size (1000 sqft)')
+plt.legend()
+plt.show()
