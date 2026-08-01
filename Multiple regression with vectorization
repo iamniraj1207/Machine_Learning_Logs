@@ -35,3 +35,51 @@ def compute_cost_multiple_var(X,y,w,b):
 
 J_wb_j = compute_cost_multiple_var(X_train,Y_train,w_init,b_init)
 print(J_wb_j)# we get the right cost function or least squared value function that will fit the training data 
+
+
+   
+def compute_gradient_descent(X,Y,w,b):
+    m,n = X.shape
+    dj_dw = np.zeros((n,))
+    dj_db = 0.
+    for i in range(m):
+        err = (np.dot(X[i],w) + b) - Y[i]
+        dj_dw += err * X[i]
+        dj_db += err
+    dj_dw = dj_dw/m
+    dj_db = dj_db/m
+    return dj_dw, dj_db
+    
+tmp_dw, tmp_db = compute_gradient_descent(X_train,Y_train,w_init,b_init)
+
+
+def gradient_descent(X,Y,w_in,b_in,num_iters,gradient_function,cost_function):
+    J_history = []
+    w = copy.deepcopy(w_in)
+    b = b_in
+    m = X.shape
+    for i in range(num_iters):
+        dj_dw, dj_db = gradient_function(X,Y,w,b)
+        w = w - alpha * dj_dw
+        b = b - alpha * dj_db
+        
+        if i < 100000:
+            J_history.append(cost_function(X,Y,w,b))
+        if i % math.ceil(num_iters/10) == 0:
+            print(f'Iteration{i:4d}: Cost: {J_history[-1]:8.2f}')
+    return w, b, J_history #return final w,b and J history for graphing
+     
+# initialize parameters
+initial_w = np.zeros_like(w_init)
+initial_b = 0.
+# some gradient descent settings
+iterations = 1000
+alpha = 5.0e-7
+
+W_final,B_final,J_hist = gradient_descent(X_train,Y_train,initial_w,initial_b,iterations,compute_gradient_descent,compute_cost_multiple_var)
+
+print(f"b,w found by gradient descent: {B_final:0.2f},{W_final} ")
+m,_ = X_train.shape
+for i in range(m):
+    print(f"prediction: {np.dot(X_train[i], W_final) + B_final:0.2f}, target value: {Y_train[i]}")
+# we get the result and it was pretty slow now we study the feature scaling then we can improve the steps and better accuracy 
