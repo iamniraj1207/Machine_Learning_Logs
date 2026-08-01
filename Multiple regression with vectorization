@@ -18,5 +18,20 @@ print(F_wb)# the target value was 460
 
 f_Wb = predict_dot_vec(w_init,X_vec_1,b_init)# for second house price predict
 F_Wb = predict_dot_vec(w_init,X_vec_2,b_init)# for third house price predict
-print(f_Wb) # target value was 232 we get 231.999
-print(F_Wb) # target value was 178 we get 179.999
+print(f_Wb) # target value was 232; we get 231.999
+print(F_Wb) # target value was 178; we get 179.999
+
+
+# Computing cost function for the multiple variable 
+
+def compute_cost_multiple_var(X,y,w,b):
+    cost = 0
+    m = X.shape[0]
+    for i in range(m):
+        f_wb_i = np.dot(X[i],w) + b
+        cost = cost + (f_wb_i - y[i])**2# cost function j, iterates it in each row of X and train 
+    cost = cost/2*m# divide it by two after summation of the cost function 
+    return cost
+
+J_wb_j = compute_cost_multiple_var(X_train,Y_train,w_init,b_init)
+print(J_wb_j)# we get the right cost function or least squared value function that will fit the training data 
