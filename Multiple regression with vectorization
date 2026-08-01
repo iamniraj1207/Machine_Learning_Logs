@@ -1,0 +1,22 @@
+import numpy as np 
+X_train = np.array([[2104, 5, 1, 45],[1416, 3, 2, 40],[852, 2, 1, 35]])#MULTIPLE FEATURES AND THEIR VALUES 
+Y_train = np.array([460,232,178])#Price in DOLLARS
+b_init = 785.1811367994083
+w_init = np.array([ 0.39133535, 18.75376741, -53.36032453, -26.42131618])
+X_vec = X_train[0,:] # selecting the ROW for the training set data
+X_vec_1 = X_train[1,:]
+X_vec_2 = X_train[2,:]
+def predict_dot_vec(w,x,b):
+    r = x.shape[0]
+    s_f_wb = np.dot(w,x)
+    s_f_wb += b
+    return s_f_wb
+
+F_wb = predict_dot_vec(w_init,X_vec,b_init)
+print(F_wb)# the target value was 460 
+
+
+f_Wb = predict_dot_vec(w_init,X_vec_1,b_init)# for second house price predict
+F_Wb = predict_dot_vec(w_init,X_vec_2,b_init)# for third house price predict
+print(f_Wb) # target value was 232 we get 231.999
+print(F_Wb) # target value was 178 we get 179.999
